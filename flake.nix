@@ -24,6 +24,7 @@
             # The Nix packages installed in the dev environment.
             packages = with pkgs; [
               typos # check misspelling
+              cocogitto # conventional commit toolkit
             ];
             # The shell script executed when the environment is activated.
             shellHook = ''
