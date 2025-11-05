@@ -23,8 +23,9 @@
           default = pkgs.mkShell {
             # The Nix packages installed in the dev environment.
             packages = with pkgs; [
-              typos # check misspelling
               cocogitto # conventional commit toolkit
+              typos # check misspelling
+              husky # manage git hooks
             ];
             # The shell script executed when the environment is activated.
             shellHook = ''
@@ -32,6 +33,10 @@
               stat flake.lock | grep "Modify" |
                 awk '{printf "\"flake.lock\" last modified on: %s", $2}' &&
                 echo " ($((($(date +%s) - $(stat -c %Y flake.lock)) / 86400)) days ago)"
+              # install git hook managed by husky
+              if [ ! -e "./.husky/_" ]; then
+                husky install
+              fi
             '';
           };
         }
