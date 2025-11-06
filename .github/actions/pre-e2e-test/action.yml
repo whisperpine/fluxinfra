@@ -5,7 +5,7 @@ inputs:
     description: The name of the repository (e.g. fluxinfra)
     default: ${{ github.event.repository.name }}
   github-token:
-    description: Just assign with ${{ secrets.GITHUB_TOKEN }}
+    description: Just assign with secrets.GITHUB_TOKEN
     required: true
 
 runs:
