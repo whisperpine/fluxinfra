@@ -17,7 +17,9 @@ jobs:
       - name: Prepare for flux end-to-end test
         uses: ./.github/actions/pre-e2e-test
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${GITHUB_REF#refs/heads/}
+          username: ${GITHUB_ACTOR}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup cluster reconciliation
         run: |
           flux create kustomization istio-ambient \

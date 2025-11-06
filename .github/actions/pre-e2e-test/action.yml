@@ -1,7 +1,13 @@
 name: Prepare for Flux End-to-end Test
 description: Setup kubernetes, install flux, add GitRepository resource
 inputs:
-  github-token:
+  branch:
+    description: Just assign with "${GITHUB_REF#refs/heads/}"
+    required: true
+  username:
+    description: Just assign with "${GITHUB_ACTOR}"
+    required: true
+  password:
     description: Just assign with secrets.GITHUB_TOKEN
     required: true
 
@@ -22,9 +28,9 @@ runs:
       run: |
         flux create source git ${{ github.event.repository.name }} \
           --url="${{ github.event.repository.html_url }}" \
-          --branch="${GITHUB_REF#refs/heads/}" \
-          --username="${GITHUB_ACTOR}" \
-          --password="${{ inputs.github-token }}"
+          --branch="${{ inputs.branch }}" \
+          --username="${{ inputs.username }}" \
+          --password="${{ inputs.password }}"
     - name: Verify cluster reconciliation
       shell: sh
       run: |
