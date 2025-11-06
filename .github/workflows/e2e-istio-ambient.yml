@@ -16,6 +16,8 @@ jobs:
       - uses: actions/checkout@v5
       - name: Prepare for flux end-to-end test
         uses: ./.github/actions/pre-e2e-test
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup cluster reconciliation
         run: |
           flux create kustomization istio-ambient \
