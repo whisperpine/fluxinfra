@@ -1,0 +1,33 @@
+name: Prepare for Flux End-to-end Test
+description: Setup kubernetes, install flux, add GitRepository resource
+inputs:
+  repo_name:
+    description: The name of the repository (e.g. fluxinfra)
+    default: ${{ github.event.repository.name }}
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Flux
+      uses: fluxcd/flux2/action@main
+    - name: Setup Kubernetes in Docker
+      uses: helm/kind-action@v1
+      with:
+        cluster_name: chart-testing-flux
+    - name: Install Flux in Kubernetes Kind
+      shell: sh
+      run: flux install --components-extra source-watcher
+    - name: Setup cluster reconciliation
+      shell: sh
+      run: |
+        flux create source git "${{ inputs.repo_name }}" \
+          --url="${{ github.event.repository.html_url }}" \
+          --branch="${GITHUB_REF#refs/heads/}" \
+          --username="${GITHUB_ACTOR}" \
+          --password="${{ secrets.GITHUB_TOKEN }}" \
+          --ignore-paths="clusters/**/flux-system/"
+    - name: Verify cluster reconciliation
+      shell: sh
+      run: |
+        kubectl -n flux-system wait gitrepo/${{ inputs.repo_name }} \
+          --for=condition=ready --timeout=30s
