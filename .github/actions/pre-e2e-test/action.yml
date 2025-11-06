@@ -22,7 +22,7 @@ runs:
       run: |
         flux create source git ${{ github.event.repository.name }} \
           --url="${{ github.event.repository.html_url }}" \
-          --branch="${{ github.ref_name }}" \
+          --branch=${{ replace(github.ref, 'refs/heads/', '') }} \
           --username="${{ github.actor }}" \
           --password="${{ inputs.password }}"
     - name: Verify cluster reconciliation
