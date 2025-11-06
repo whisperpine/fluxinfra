@@ -20,14 +20,9 @@ runs:
     - name: Setup cluster reconciliation
       shell: sh
       run: |
-        head_ref=${{ github.head_ref }}
-        base_ref=${{ github.base_ref }}
-        ref=${{ github.ref }}
-        ref_name=${{ github.ref_name }}
-        echo "FLUX_BRANCH=ci/e2e-action" >> "$GITHUB_ENV"
         flux create source git ${{ github.event.repository.name }} \
           --url="${{ github.event.repository.html_url }}" \
-          --branch="${{ env.FLUX_BRANCH }}" \
+          --branch="${{ github.head_ref }}" \
           --username="${{ github.actor }}" \
           --password="${{ inputs.password }}"
     - name: Verify cluster reconciliation
