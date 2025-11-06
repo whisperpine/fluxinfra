@@ -25,6 +25,7 @@
             packages = with pkgs; [
               fluxcd # GitOps solution for kubernetes
               cocogitto # conventional commit toolkit
+              git-cliff # generate changelog
               typos # check misspelling
               husky # manage git hooks
             ];
