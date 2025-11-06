@@ -1,9 +1,6 @@
 name: Prepare for Flux End-to-end Test
 description: Setup kubernetes, install flux, add GitRepository resource
 inputs:
-  repo-name:
-    description: The name of the repository (e.g. fluxinfra)
-    default: ${{ github.event.repository.name }}
   github-token:
     description: Just assign with secrets.GITHUB_TOKEN
     required: true
@@ -23,14 +20,13 @@ runs:
     - name: Setup cluster reconciliation
       shell: sh
       run: |
-        flux create source git "${{ inputs.repo-name }}" \
+        flux create source git ${{ github.event.repository.name }} \
           --url="${{ github.event.repository.html_url }}" \
           --branch="${GITHUB_REF#refs/heads/}" \
           --username="${GITHUB_ACTOR}" \
-          --password="${{ inputs.github-token }}" \
-          --ignore-paths="clusters/**/flux-system/"
+          --password="${{ inputs.github-token }}"
     - name: Verify cluster reconciliation
       shell: sh
       run: |
-        kubectl -n flux-system wait gitrepo/${{ inputs.repo-name }} \
+        kubectl -n flux-system wait gitrepo/${{ github.event.repository.name }} \
           --for=condition=ready --timeout=30s
