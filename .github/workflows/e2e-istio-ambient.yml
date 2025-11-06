@@ -18,6 +18,8 @@ jobs:
         uses: ./.github/actions/pre-e2e-test
         with:
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      # ----- below are unique to "istio-ambient" ----- #
       - name: Setup cluster reconciliation
         run: |
           flux create kustomization istio-ambient \
@@ -34,5 +36,14 @@ jobs:
       - name: List deployed resources in tree
         run: |
           flux tree ks istio-ambient
-      - name: Post processes for flux end-to-end test
-        uses: ./.github/actions/post-e2e-test
+      # ----- above are unique to "istio-ambient" ----- #
+
+      - name: List all flux resources
+        run: flux get all --all-namespaces
+      - name: Debug failure
+        if: failure()
+        run: |
+          kubectl -n flux-system get all
+          kubectl -n flux-system logs deploy/source-controller
+          kubectl -n flux-system logs deploy/kustomize-controller
+          kubectl -n flux-system logs deploy/helm-controller
