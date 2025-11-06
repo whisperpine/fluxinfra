@@ -20,7 +20,8 @@ runs:
     - name: Setup cluster reconciliation
       shell: sh
       run: |
-        echo "FLUX_BRANCH=${GITHUB_REF#refs/heads/}" >> "$GITHUB_ENV"
+        github_ref=${{ github.ref }}
+        echo "FLUX_BRANCH=${github_ref#refs/heads/}" >> "$GITHUB_ENV"
         flux create source git ${{ github.event.repository.name }} \
           --url="${{ github.event.repository.html_url }}" \
           --branch="${{ env.FLUX_BRANCH }}" \
