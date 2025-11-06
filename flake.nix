@@ -23,6 +23,7 @@
           default = pkgs.mkShell {
             # The Nix packages installed in the dev environment.
             packages = with pkgs; [
+              fluxcd # GitOps solution for kubernetes
               cocogitto # conventional commit toolkit
               typos # check misspelling
               husky # manage git hooks
