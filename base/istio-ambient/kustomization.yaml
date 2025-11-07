@@ -6,3 +6,4 @@ resources:
   - hr-istio-cni.yaml
   - hr-istio-ztunnel.yaml
   - hr-istiod.yaml
+  - hr-istio-ingressgateway.yaml
