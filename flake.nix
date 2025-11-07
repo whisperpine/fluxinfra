@@ -23,11 +23,19 @@
           default = pkgs.mkShell {
             # The Nix packages installed in the dev environment.
             packages = with pkgs; [
-              fluxcd # GitOps solution for kubernetes
+              # --- general purpose --- #
               cocogitto # conventional commit toolkit
               git-cliff # generate changelog
               typos # check misspelling
               husky # manage git hooks
+
+              # --- kubernetes ecosystem --- #
+              fluxcd # GitOps solution for kubernetes
+
+              # --- dependencies of ./scripts/validate.sh --- #
+              kubeconform # kubernetes manifests validator
+              kustomize # customization of kubernetes yaml
+              yq-go # command-line yaml processor
             ];
             # The shell script executed when the environment is activated.
             shellHook = ''
