@@ -34,6 +34,7 @@ jobs:
           kubectl -n flux-system wait helmrepo/istio --for=condition=ready --timeout=30s
           kubectl -n istio-system wait hr/istio-base --for=condition=ready --timeout=30s
           kubectl -n kube-system wait hr/istio-cni --for=condition=ready --timeout=30s
+          kubectl -n istio-system wait hr/istiod --for=condition=ready --timeout=30s
           kubectl -n istio-system wait hr/istio-ztunnel --for=condition=ready --timeout=30s
       - name: List deployed resources in tree
         run: |
