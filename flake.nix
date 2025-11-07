@@ -26,6 +26,7 @@
               # --- general purpose --- #
               cocogitto # conventional commit toolkit
               git-cliff # generate changelog
+              just # just a command runner
               typos # check misspelling
               husky # manage git hooks
 
