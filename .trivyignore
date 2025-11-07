@@ -1,0 +1,4 @@
+# MEDIUM: HelmRelease 'istio-cni' should not be set with 'kube-system' namespace.
+# ensure that user resources are not placed in kube-system namespace
+# See https://avd.aquasec.com/misconfig/no-user-pods-in-system-namespace
+AVD-KSV-0037
