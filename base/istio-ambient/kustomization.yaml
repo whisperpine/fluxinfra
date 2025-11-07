@@ -4,3 +4,5 @@ resources:
   - helm-repo-istio.yaml
   - hr-istio-base.yaml
   - hr-istio-cni.yaml
+  - hr-istio-ztunnel.yaml
+  - hr-istiod.yaml
