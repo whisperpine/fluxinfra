@@ -63,3 +63,14 @@ jobs:
         with:
           sarif_file: trivy-results.sarif
           category: trivy-config-scan
+
+  validate-manifests:
+    runs-on: ubuntu-latest
+    name: validate flux resources
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: cachix/install-nix-action@v31
+      - name: Validate manifests
+        shell: nix shell nixpkgs#yq-go nixpkgs#kubeconform nixpkgs#kustomize --quiet --command bash {0}
+        run: bash ./scripts/validate.sh
