@@ -63,3 +63,18 @@ jobs:
         with:
           sarif_file: trivy-results.sarif
           category: trivy-config-scan
+
+  validate-manifests:
+    runs-on: ubuntu-latest
+    name: validate flux resources
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup yq
+        uses: fluxcd/pkg/actions/yq@main
+      - name: Setup kubeconform
+        uses: fluxcd/pkg/actions/kubeconform@main
+      - name: Setup kustomize
+        uses: fluxcd/pkg/actions/kustomize@main
+      - name: Validate manifests
+        run: ./scripts/validate.sh
