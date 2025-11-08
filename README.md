@@ -8,3 +8,9 @@
 
 FluxCD GitRepository source used to manage infrastructure
 shared across kubernetes clusters.
+
+## Prerequisites
+
+- Commonly used Kubernetes commands (e.g. `flux`, `helm`, `kubectl`) are installed.
+- A Kubernetes cluster that has already [flux bootstrap](https://fluxcd.io/flux/installation/bootstrap/).
+  (Check bootstrap status by running `flux check`).
