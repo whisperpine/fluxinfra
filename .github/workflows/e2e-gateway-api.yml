@@ -1,0 +1,47 @@
+name: E2E gateway-api
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: ["main"]
+
+jobs:
+  flux-e2e-test:
+    runs-on: ubuntu-latest
+    name: flux end-to-end test
+    env:
+      REPO_NAME: ${{ github.event.repository.name }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Prepare for flux end-to-end test
+        uses: ./.github/actions/pre-e2e-test
+        with:
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # ----- below are unique to "gateway-api" ----- #
+      - name: Setup cluster reconciliation
+        run: |
+          flux create kustomization gateway-api \
+            --source="GitRepository/$REPO_NAME" \
+            --path="./overlays/gateway-api"
+      - name: Verify cluster reconciliation
+        run: |
+          kubectl -n flux-system wait gitrepo/"$REPO_NAME" --for=condition=ready --timeout=30s
+      - name: Verify helm reconciliation
+        run: |
+          kubectl -n flux-system wait ks/gateway-api --for=condition=ready --timeout=30s
+      - name: List deployed resources in tree
+        run: |
+          flux tree ks gateway-api
+      # ----- above are unique to "gateway-api" ----- #
+
+      - name: List all flux resources
+        run: flux get all --all-namespaces
+      - name: Debug failure
+        if: failure()
+        run: |
+          kubectl -n flux-system get all
+          kubectl -n flux-system logs deploy/source-controller
+          kubectl -n flux-system logs deploy/kustomize-controller
+          kubectl -n flux-system logs deploy/helm-controller
