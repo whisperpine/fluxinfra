@@ -1,4 +1,14 @@
-scopes = ["deps", "istio"]
+scopes = [
+  "deps",
+  "otel",    # Opentelmetry
+  "prom",    # Prometheus
+  "istio",
+  "loki",
+  "grafana",
+  "tempo",
+  "signoz",
+  "vault",
+]
 
 tag_prefix = "v"
 
