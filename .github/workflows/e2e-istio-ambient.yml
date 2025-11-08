@@ -40,7 +40,6 @@ jobs:
           kubectl -n kube-system wait hr/istio-cni --for=condition=ready --timeout=30s
           kubectl -n istio-system wait hr/istiod --for=condition=ready --timeout=1m
           kubectl -n istio-system wait hr/istio-ztunnel --for=condition=ready --timeout=1m
-          kubectl -n istio-ingress wait hr/istio-ingressgateway --for=condition=ready --timeout=1m
       - name: List deployed resources in tree
         run: |
           flux tree ks istio-ambient
