@@ -31,8 +31,6 @@ jobs:
       - name: Verify helm reconciliation
         run: |
           kubectl -n flux-system wait ks/gateway-api --for=condition=ready --timeout=30s
-          kubectl -n flux-system wait helmrepo/gateway-api --for=condition=ready --timeout=30s
-          kubectl -n kube-system wait hr/gateway-api --for=condition=ready --timeout=30s
       - name: List deployed resources in tree
         run: |
           flux tree ks gateway-api

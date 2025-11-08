@@ -1,5 +1,4 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - helm-repo-gateway-api.yaml
-  - hr-gateway-api.yaml
+  - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/standard-install.yaml
