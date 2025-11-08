@@ -2,6 +2,7 @@ scopes = [
   "deps",
   "otel",    # Opentelmetry
   "prom",    # Prometheus
+  "gate",    # Gateway API
   "istio",
   "loki",
   "grafana",
