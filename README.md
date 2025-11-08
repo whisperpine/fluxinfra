@@ -14,3 +14,46 @@ shared across kubernetes clusters.
 - Commonly used Kubernetes commands (e.g. `flux`, `helm`, `kubectl`) are installed.
 - A Kubernetes cluster that has already [flux bootstrap](https://fluxcd.io/flux/installation/bootstrap/).
   (Check bootstrap status by running `flux check`).
+
+## Get Started
+
+Make sure your current working directory is what created by `flux bootstrap`.
+The file structure looks like:
+
+```txt
+my-dev-k8s
+└── flux-system
+    ├── gotk-components.yaml
+    ├── gotk-sync.yaml
+    └── kustomization.yaml
+```
+
+Run the following conmmands to create flux configurations for this repo:
+
+```sh
+mkdir -p fluxinfra
+
+flux create source git fluxinfra \
+  --url=https://github.com/whisperpine/fluxinfra \
+  --branch=main \
+  --export >fluxinfra/git-repo-fluxinfra.yaml
+```
+
+Now the file structure should be something like:
+
+```txt
+my-dev-k8s
+├── flux-system
+│   ├── gotk-components.yaml
+│   ├── gotk-sync.yaml
+│   └── kustomization.yaml
+└── fluxinfra
+    └── git-repo-fluxinfra.yaml
+```
+
+Commit changes, push to remote repository, and wait for the reconciliation of flux.
+
+```sh
+# Run this command and the "READY" column should be "True".
+flux get source git fluxinfra
+```
