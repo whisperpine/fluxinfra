@@ -1,0 +1,9 @@
+# ----- sidecar mode ----- #
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - helm-repo-istio.yaml
+  - hr-istio-base.yaml
+  - hr-istio-cni.yaml
+  - hr-istiod.yaml
