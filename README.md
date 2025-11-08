@@ -57,3 +57,14 @@ Commit changes, push to remote repository, and wait for the reconciliation of fl
 # Run this command and the "READY" column should be "True".
 flux get source git fluxinfra
 ```
+
+## Renovate
+
+Dependencies, including chart versions in HelmRelease resources, are
+automatically updated by [Renovate](https://github.com/renovatebot/renovate).
+
+Chart versions are precisely configured (e.g. `"1.28.0"`, not `"1.*"`) for safety
+and reproducibility, while they are kept up-to-date without hassle by Pull
+Requests created by Renovate.
+
+Refer to [Automated Dependency Updates for Flux - Renovate Docs](https://docs.renovatebot.com/modules/manager/flux/).
