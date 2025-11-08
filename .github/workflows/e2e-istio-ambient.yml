@@ -3,6 +3,10 @@ name: E2E istio-ambient
 on:
   workflow_dispatch:
   pull_request:
+    paths:
+      # - ./.github/workflows/e2e-istio-ambient.yml
+      - ./base/istio-ambient/**
+      - ./overlays/istio-ambient/**
   push:
     branches: ["main"]
 
