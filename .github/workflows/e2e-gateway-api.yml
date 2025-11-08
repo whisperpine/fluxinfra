@@ -24,7 +24,7 @@ jobs:
         run: |
           flux create kustomization gateway-api \
             --source="GitRepository/$REPO_NAME" \
-            --path="./overlays/overlays/gateway-api"
+            --path="./overlays/gateway-api"
       - name: Verify cluster reconciliation
         run: |
           kubectl -n flux-system wait gitrepo/"$REPO_NAME" --for=condition=ready --timeout=30s
