@@ -7,5 +7,3 @@ resources:
   - hr-istio-ztunnel.yaml
   - hr-istiod.yaml
   - hr-istio-ingressgateway.yaml
-
-# add one line of comment
