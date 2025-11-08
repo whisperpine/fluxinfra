@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - .github/workflows/e2e-gateway-api.yml
+      # - .github/workflows/e2e-gateway-api.yml
       - base/gateway-api/**
       - overlays/gateway-api/**
   push:
