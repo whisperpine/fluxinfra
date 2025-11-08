@@ -15,7 +15,9 @@ shared across kubernetes clusters.
 - A Kubernetes cluster that has already [flux bootstrap](https://fluxcd.io/flux/installation/bootstrap/).
   (Check bootstrap status by running `flux check`).
 
-## Get Started
+## Getting Started
+
+### Flux Bootstrap
 
 Make sure your current working directory is what created by `flux bootstrap`.
 The file structure looks like:
@@ -27,6 +29,8 @@ my-dev-k8s
     ├── gotk-sync.yaml
     └── kustomization.yaml
 ```
+
+### Add the GitRepository
 
 Run the following conmmands to create flux configurations for this repo:
 
@@ -58,6 +62,31 @@ Commit changes, push to remote repository, and wait for the reconciliation of fl
 flux get source git fluxinfra
 ```
 
+### Add Kustomizations
+
+When you've already added the fluxinfra GitRepository resource to your
+kubernetes cluster by the steps mentioned above, you can then add any one or
+multiple the kustomizations under [./overlays](./overlays/) directory as needed.
+
+Run the following command to create a flux kustomization (here we use
+[gateway-api](./overlays/gateway-api/kustomization.yaml) as an example):
+
+```sh
+flux create kustomization gateway-api \
+  --source=GitRepository/fluxinfra \
+  --path="./overlays/gateway-api" \
+  --interval=1m \
+  --prune=true \
+  --wait=true \
+  --export >fluxinfra/kks-gateway-api.yaml
+```
+
+Commit changes, push to remote repository, and wait for the reconciliation of flux.
+
+```sh
+# Run this command and the "READY" column should be "True".
+flux get ks gateway-api
+```
 ## Renovate
 
 Dependencies, including chart versions in HelmRelease resources, are
