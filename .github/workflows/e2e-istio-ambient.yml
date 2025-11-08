@@ -7,6 +7,7 @@ on:
       - .github/workflows/e2e-istio-ambient.yml
       - base/istio-ambient/**
       - overlays/istio-ambient/**
+      - namespaces/**
   push:
     branches: ["main"]
 
