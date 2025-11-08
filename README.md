@@ -87,6 +87,19 @@ Commit changes, push to remote repository, and wait for the reconciliation of fl
 # Run this command and the "READY" column should be "True".
 flux get ks gateway-api
 ```
+
+## Kustomizations
+
+Kustomizations in this repository can generally be used in combination, but some
+of the kustomizations conflict with certain ones. Refer to the table below to
+get an exhaustive list of kustomizations as well as avoid conflicts.
+
+| Kustomization | Depends on | Conflicts with |
+| - | - | - |
+| [gateway-api](./overlays/gateway-api/) | | |
+| [istio-ambient](./overlays/istio-ambient/) | (gateway-api) | istio-sidecar |
+| [istio-sidecar](./overlays/istio-sidecar/) | (gateway-api) | istio-ambient |
+
 ## Renovate
 
 Dependencies, including chart versions in HelmRelease resources, are
