@@ -1,0 +1,56 @@
+name: E2E istio-sidecar
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/e2e-istio-sidecar.yml
+      - base/istio-sidecar/**
+      - overlays/istio-sidecar/**
+      - namespaces/**
+  push:
+    branches: ["main"]
+
+jobs:
+  flux-e2e-test:
+    runs-on: ubuntu-latest
+    name: flux end-to-end test
+    env:
+      REPO_NAME: ${{ github.event.repository.name }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Prepare for flux end-to-end test
+        uses: ./.github/actions/pre-e2e-test
+        with:
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # ----- below are unique to "istio-sidecar" ----- #
+      - name: Setup cluster reconciliation
+        run: |
+          flux create kustomization istio-sidecar \
+            --source="GitRepository/$REPO_NAME" \
+            --path="./overlays/istio-sidecar"
+      - name: Verify cluster reconciliation
+        run: |
+          kubectl -n flux-system wait gitrepo/"$REPO_NAME" --for=condition=ready --timeout=30s
+      - name: Verify helm reconciliation
+        run: |
+          kubectl -n flux-system wait ks/istio-sidecar --for=condition=ready --timeout=30s
+          kubectl -n flux-system wait helmrepo/istio --for=condition=ready --timeout=30s
+          kubectl -n istio-system wait hr/istio-base --for=condition=ready --timeout=30s
+          kubectl -n kube-system wait hr/istio-cni --for=condition=ready --timeout=30s
+          kubectl -n istio-system wait hr/istiod --for=condition=ready --timeout=1m
+      - name: List deployed resources in tree
+        run: |
+          flux tree ks istio-sidecar
+      # ----- above are unique to "istio-sidecar" ----- #
+
+      - name: List all flux resources
+        run: flux get all --all-namespaces
+      - name: Debug failure
+        if: failure()
+        run: |
+          kubectl -n flux-system get all
+          kubectl -n flux-system logs deploy/source-controller
+          kubectl -n flux-system logs deploy/kustomize-controller
+          kubectl -n flux-system logs deploy/helm-controller
