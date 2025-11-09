@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+  labels:
+    app.kubernetes.io/component: monitoring
+    # Enforce Pod Security Standards with Namespace Labels:
+    # https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-namespace-labels/
+    pod-security.kubernetes.io/enforce: privileged
