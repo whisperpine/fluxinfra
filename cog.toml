@@ -1,5 +1,6 @@
 scopes = [
   "deps",
+  "eso",     # External Secrets Operator
   "otel",    # Opentelmetry
   "prom",    # Prometheus
   "gate",    # Gateway API
@@ -9,6 +10,7 @@ scopes = [
   "tempo",
   "signoz",
   "vault",
+  "consul",
 ]
 
 tag_prefix = "v"
