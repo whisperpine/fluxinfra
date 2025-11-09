@@ -99,6 +99,7 @@ get an exhaustive list of kustomizations as well as avoid conflicts.
 | [gateway-api](./overlays/gateway-api/) | | |
 | [istio-ambient](./overlays/istio-ambient/) | (gateway-api) | istio-sidecar |
 | [istio-sidecar](./overlays/istio-sidecar/) | (gateway-api) | istio-ambient |
+| [grafana-prometheus](./overlays/grafana-prometheus/) | | |
 
 ## Renovate
 
