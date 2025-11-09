@@ -39,8 +39,8 @@ jobs:
           kubectl -n flux-system wait ks/grafana-prometheus --for=condition=ready --timeout=30s
           kubectl -n flux-system wait helmrepo/prometheus --for=condition=ready --timeout=30s
           kubectl -n flux-system wait helmrepo/grafana --for=condition=ready --timeout=30s
-          kubectl -n monitoring wait hr/prometheus --for=condition=ready --timeout=30s
-          kubectl -n monitoring wait hr/grafana --for=condition=ready --timeout=30s
+          kubectl -n monitoring wait hr/prometheus --for=condition=ready --timeout=1m
+          kubectl -n monitoring wait hr/grafana --for=condition=ready --timeout=1m
       - name: List deployed resources in tree
         run: |
           flux tree ks grafana-prometheus
