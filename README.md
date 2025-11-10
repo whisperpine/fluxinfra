@@ -16,9 +16,11 @@ reconciliation. [Flux](https://fluxcd.io/) is a popular CNCF project that
 enables this model by syncing Kubernetes clusters with version-controlled
 configuration.
 
-The goal of this project is to create a reproducible and declarative infra-level
+The goal of this project is to create a reproducible and declarative *infra-level*
 deployment (e.g. observablity, service mesh) shared across multiple clusters,
 leveraging Git as the single source of truth.
+(Application-level services can also be deployed by this approach, but it would
+be better to use dedicated repositories.)
 
 This repository is also my personal playground for exploring best practices in
 GitOps and cloud-native infrastructure management. It demonstrates how to manage
