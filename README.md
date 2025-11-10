@@ -9,6 +9,38 @@
 FluxCD GitRepository source used to manage infrastructure
 shared across kubernetes clusters.
 
+## Background
+
+GitOps workflows rely on declarative infrastructure and continuous
+reconciliation. [Flux](https://fluxcd.io/) is a popular CNCF project that
+enables this model by syncing Kubernetes clusters with version-controlled
+configuration.
+
+The goal of this project is to create a reproducible and declarative infra-level
+deployment (e.g. observablity, service mesh) shared across multiple clusters,
+leveraging Git as the single source of truth.
+
+This repository is also my personal playground for exploring best practices in
+GitOps and cloud-native infrastructure management. It demonstrates how to manage
+a full Kubernetes stack end-to-end using Flux. While it's tailored for my use
+cases, it may help you get started.
+
+## Kustomizations
+
+Kustomizations in this repository can generally be used in combination, but some
+of the kustomizations conflict with certain ones. Refer to the table below to
+get an exhaustive list of kustomizations as well as avoid conflicts.
+
+| Kustomization | Depends on | Conflicts with |
+| - | - | - |
+| [gateway-api](./overlays/gateway-api/) | | |
+| [istio-ambient](./overlays/istio-ambient/) | (gateway-api) | istio-sidecar |
+| [istio-sidecar](./overlays/istio-sidecar/) | (gateway-api) | istio-ambient |
+| [grafana-prometheus](./overlays/grafana-prometheus/) | | |
+
+Items surrounded by parentheses are "soft dependencies", meaning they're a
+perfect match but not necessary.
+
 ## Prerequisites
 
 - Commonly used Kubernetes commands (e.g. `flux`, `helm`, `kubectl`) are installed.
@@ -87,19 +119,6 @@ Commit changes, push to remote repository, and wait for the reconciliation of fl
 # Run this command and the "READY" column should be "True".
 flux get ks gateway-api
 ```
-
-## Kustomizations
-
-Kustomizations in this repository can generally be used in combination, but some
-of the kustomizations conflict with certain ones. Refer to the table below to
-get an exhaustive list of kustomizations as well as avoid conflicts.
-
-| Kustomization | Depends on | Conflicts with |
-| - | - | - |
-| [gateway-api](./overlays/gateway-api/) | | |
-| [istio-ambient](./overlays/istio-ambient/) | (gateway-api) | istio-sidecar |
-| [istio-sidecar](./overlays/istio-sidecar/) | (gateway-api) | istio-ambient |
-| [grafana-prometheus](./overlays/grafana-prometheus/) | | |
 
 ## Renovate
 
