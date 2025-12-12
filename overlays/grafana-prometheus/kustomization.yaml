@@ -8,3 +8,4 @@ patches:
   - path: hr-grafana-values.yaml
     target:
       kind: HelmRelease
+      name: grafana
