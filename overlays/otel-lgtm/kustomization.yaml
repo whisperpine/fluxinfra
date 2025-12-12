@@ -11,6 +11,7 @@ patches:
   - path: hr-grafana-values.yaml
     target:
       kind: HelmRelease
+      name: grafana
   # - path: hr-opentelemetry-collector-values.yaml
   #   target:
   #     kind: HelmRelease
