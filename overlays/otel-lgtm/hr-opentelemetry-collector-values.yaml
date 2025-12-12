@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: opentelemetry-collector
+  namespace: monitoring
+spec:
+  # https://opentelemetry.io/docs/platforms/kubernetes/helm/collector/
+  values:
+    config:
+      exporters:
+        # Send to prometheus' otlp receiver.
+        # Prerequisites: prometheus enables "web.enable-otlp-receiver".
+        otlphttp/prometheus:
+          endpoint: "prometheus-server.monitoring.svc.cluster.local/api/v1/otlp/v1/metrics"
+        # # Should be scraped by prometheus.
+        # prometheus:
+        #   endpoint: "0.0.0.0:8889"
+        #   namespace: "otelcol"
+        otlphttp/loki:
+          endpoint: "loki.monitoring.svc.cluster.local:3100/otlp"
+        otlp/tempo:
+          endpoint: "tempo.monitoring.svc.cluster.local:4317"
+          tls:
+            insecure: true
+      service:
+        pipelines:
+          metrics:
+            receivers: [otlp]
+            exporters: [otlphttp/prometheus]
+          logs:
+            receivers: [otlp]
+            exporters: [otlphttp/loki]
+          traces:
+            receivers: [otlp]
+            exporters: [otlp/tempo]

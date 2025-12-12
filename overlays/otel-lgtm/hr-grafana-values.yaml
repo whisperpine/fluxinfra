@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  values:
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            url: http://prometheus-server.monitoring.svc.cluster.local
+            access: proxy
+            isDefault: true
+          - name: Loki
+            type: loki
+            url: http://loki.monitoring.svc.cluster.local:3100
+            access: proxy
+          - name: Tempo
+            type: tempo
+            access: proxy
+            url: http://tempo.monitoring.svc.cluster.local:3200
