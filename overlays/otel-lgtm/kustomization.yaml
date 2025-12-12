@@ -3,9 +3,9 @@ kind: Kustomization
 resources:
   - ../../namespaces/monitoring.yaml
   # - ../../base/opentelemetry
-  # - ../../base/prometheus
+  - ../../base/prometheus
   - ../../base/tempo
-  # - ../../base/loki
+  - ../../base/loki
   # - ../../base/grafana
 # patches:
 #   - path: hr-grafana-values.yaml
