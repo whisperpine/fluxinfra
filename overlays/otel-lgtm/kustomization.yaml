@@ -6,11 +6,11 @@ resources:
   - ../../base/prometheus
   - ../../base/tempo
   - ../../base/loki
-  # - ../../base/grafana
-# patches:
-#   - path: hr-grafana-values.yaml
-#     target:
-#       kind: HelmRelease
-#   - path: hr-opentelemetry-collector-values.yaml
-#     target:
-#       kind: HelmRelease
+  - ../../base/grafana
+patches:
+  - path: hr-grafana-values.yaml
+    target:
+      kind: HelmRelease
+  # - path: hr-opentelemetry-collector-values.yaml
+  #   target:
+  #     kind: HelmRelease
