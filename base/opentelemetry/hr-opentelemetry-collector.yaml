@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/refs/heads/main/all.json
+
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: opentelemetry-collector
+  namespace: monitoring
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: opentelemetry-collector
+      version: "0.138.1"
+      sourceRef:
+        kind: HelmRepository
+        name: opentelemetry
+        namespace: flux-system
+  # https://opentelemetry.io/docs/platforms/kubernetes/helm/collector/
+  values:
+    mode: deployment
+    image:
+      repository: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib
+    ports:
+      jaeger-compact:
+        enabled: false
+      jaeger-thrift:
+        enabled: false
+      jaeger-grpc:
+        enabled: false
+      zipkin:
+        enabled: false
+      # # Enable this if scraping approach is used.
+      # prometheus:
+      #   enabled: true
+      #   containerPort: 8889
+      #   servicePort: 8889
+    config:
+      receivers:
+        jaeger: null
+        prometheus: null
+        zipkin: null
+        otlp:
+          protocols:
+            grpc:
+              endpoint: "0.0.0.0:4317"
+            http:
+              endpoint: "0.0.0.0:4318"
