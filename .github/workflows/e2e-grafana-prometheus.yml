@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - .github/workflows/e2e-grafana-prometheus
+      - .github/workflows/e2e-grafana-prometheus.yml
       - base/prometheus/**
       - base/grafana/**
       - overlays/grafana-prometheus/**
