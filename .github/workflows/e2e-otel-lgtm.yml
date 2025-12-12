@@ -47,11 +47,11 @@ jobs:
           kubectl -n flux-system wait helmrepo/tempo --for=condition=ready --timeout=30s
           kubectl -n flux-system wait helmrepo/loki --for=condition=ready --timeout=30s
           # hr (HelmRelease)
-          kubectl -n monitoring wait hr/opentelemetry-collector --for=condition=ready --timeout=2m
-          kubectl -n monitoring wait hr/prometheus --for=condition=ready --timeout=2m
-          kubectl -n monitoring wait hr/grafana --for=condition=ready --timeout=2m
-          kubectl -n monitoring wait hr/tempo --for=condition=ready --timeout=2m
-          kubectl -n monitoring wait hr/loki --for=condition=ready --timeout=2m
+          kubectl -n monitoring wait hr/opentelemetry-collector --for=condition=ready --timeout=1m
+          kubectl -n monitoring wait hr/prometheus --for=condition=ready --timeout=1m
+          kubectl -n monitoring wait hr/grafana --for=condition=ready --timeout=1m
+          kubectl -n monitoring wait hr/tempo --for=condition=ready --timeout=1m
+          kubectl -n monitoring wait hr/loki --for=condition=ready --timeout=1m
       - name: List deployed resources in tree
         run: |
           flux tree ks otel-lgtm
