@@ -1,4 +1,7 @@
-# Fluxinfra
+<!-- markdownlint-disable MD033 -->
+<h1 align="center">Fluxinfra</h1>
+
+<div align="center">
 
 [![Flux](https://img.shields.io/badge/Flux-5468FF?logo=flux&logoColor=white)](https://github.com/fluxcd/flux2)
 [![GitHub License](https://img.shields.io/github/license/whisperpine/fluxinfra)](https://github.com/whisperpine/fluxinfra/blob/main/LICENSE)
@@ -8,6 +11,8 @@
 
 FluxCD GitRepository source used to manage infrastructure
 shared across kubernetes clusters.
+
+</div>
 
 ## Background
 
