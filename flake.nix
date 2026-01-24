@@ -28,7 +28,7 @@
               git-cliff # generate changelog
               just # just a command runner
               typos # check misspelling
-              husky # manage git hooks
+              prek # better pre-commit
 
               # --- kubernetes ecosystem --- #
               fluxcd # GitOps solution for kubernetes
@@ -44,10 +44,8 @@
               git log -1 --format="%cd" --date=format:"%Y-%m-%d" -- flake.lock |
                 awk '{printf "\"flake.lock\" last modified on: %s", $1}' &&
                 echo " ($((($(date +%s) - $(git log -1 --format="%ct" -- flake.lock)) / 86400)) days ago)"
-              # install git hook managed by husky
-              if [ ! -e "./.husky/_" ]; then
-                husky install
-              fi
+              # Install git hooks managed by prek.
+              prek install --quiet
             '';
           };
         }
