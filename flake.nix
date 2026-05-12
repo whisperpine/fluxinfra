@@ -29,6 +29,7 @@
               just # just a command runner
               typos # check misspelling
               prek # better pre-commit
+              rumdl # markdown linter
 
               # --- kubernetes ecosystem --- #
               fluxcd # GitOps solution for kubernetes
