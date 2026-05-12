@@ -1,4 +1,3 @@
-<!-- markdownlint-disable MD033 -->
 <h1 align="center">Fluxinfra</h1>
 
 <div align="center">
@@ -40,11 +39,11 @@ get an exhaustive list of kustomizations as well as avoid conflicts.
 
 | Kustomization | Depends on | Conflicts with |
 | - | - | - |
-| [gateway-api](./overlays/gateway-api/) | | |
+| [gateway-api](./overlays/gateway-api/) |  |  |
 | [istio-ambient](./overlays/istio-ambient/) | (gateway-api) | istio-sidecar |
 | [istio-sidecar](./overlays/istio-sidecar/) | (gateway-api) | istio-ambient |
-| [grafana-prometheus](./overlays/grafana-prometheus/) | | otel-lgtm |
-| [otel-lgtm](./overlays/otel-lgtm/) | | grafana-prometheus |
+| [grafana-prometheus](./overlays/grafana-prometheus/) |  | otel-lgtm |
+| [otel-lgtm](./overlays/otel-lgtm/) |  | grafana-prometheus |
 
 Items surrounded by parentheses are "soft dependencies", meaning they're a
 perfect match but not necessary.
