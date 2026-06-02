@@ -1,3 +1,7 @@
+tag_prefix = "v"
+
+ignore_fixup_commits = true
+
 scopes = [
   "deps",
   "eso",     # External Secrets Operator
@@ -12,8 +16,6 @@ scopes = [
   "vault",
   "consul",
 ]
-
-tag_prefix = "v"
 
 [commit_types]
 fix = { changelog_title = "Bug Fixes" }
