@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     name: check misspelling by typos
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
       - name: Run typos command
         shell: nix shell nixpkgs#typos --quiet --command bash {0}
@@ -20,7 +20,7 @@ jobs:
     name: lint markdown by rumdl
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
       - name: Run rumdl command
         shell: nix shell nixpkgs#rumdl --quiet --command bash {0}
@@ -32,7 +32,7 @@ jobs:
     permissions:
       security-events: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
       - name: Run Trivy vulnerability scanner in repo mode
         shell: nix shell nixpkgs#trivy --quiet --command bash {0}
@@ -65,7 +65,7 @@ jobs:
     name: validate flux resources
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - uses: cachix/install-nix-action@v31
       - name: Validate manifests
         shell: nix shell nixpkgs#yq-go nixpkgs#kubeconform nixpkgs#kustomize --quiet --command bash {0}
