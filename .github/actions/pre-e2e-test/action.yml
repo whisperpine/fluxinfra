@@ -9,9 +9,9 @@ runs:
   using: composite
   steps:
     - name: Setup Flux
-      uses: fluxcd/flux2/action@main
+      uses: fluxcd/flux2/action@main # zizmor: ignore[unpinned-uses]
     - name: Setup Kubernetes in Docker
-      uses: helm/kind-action@v1
+      uses: helm/kind-action@v1 # zizmor: ignore[unpinned-uses]
       with:
         cluster_name: chart-testing-flux
     - name: Install Flux in Kubernetes Kind
@@ -20,13 +20,20 @@ runs:
     - name: Setup cluster reconciliation
       shell: sh
       run: |
-        flux create source git ${{ github.event.repository.name }} \
-          --url="${{ github.event.repository.html_url }}" \
-          --branch="${{ github.head_ref || github.ref_name }}" \
-          --username="${{ github.actor }}" \
-          --password="${{ inputs.password }}"
+        flux create source git ${GITHUB_EVENT_REPOSITORY_NAME} \
+          --url="${GITHUB_EVENT_REPOSITORY_HTML_URL}" \
+          --branch="$BRANCH" \
+          --username="${GITHUB_ACTOR}" \
+          --password="${INPUTS_PASSWORD}"
+      env:
+        GITHUB_EVENT_REPOSITORY_NAME: ${{ github.event.repository.name }}
+        GITHUB_EVENT_REPOSITORY_HTML_URL: ${{ github.event.repository.html_url }}
+        BRANCH: ${{ github.head_ref || github.ref_name }}
+        INPUTS_PASSWORD: ${{ inputs.password }}
     - name: Verify cluster reconciliation
       shell: sh
       run: |
-        kubectl -n flux-system wait gitrepo/${{ github.event.repository.name }} \
+        kubectl -n flux-system wait gitrepo/${GITHUB_EVENT_REPOSITORY_NAME} \
           --for=condition=ready --timeout=30s
+      env:
+        GITHUB_EVENT_REPOSITORY_NAME: ${{ github.event.repository.name }}
