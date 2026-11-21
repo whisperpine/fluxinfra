@@ -27,6 +27,7 @@
               git-cliff # generate changelog
               just # just a command runner
               typos # check misspelling
+              zizmor # lint github actions
               prek # better pre-commit
               rumdl # markdown linter
 
